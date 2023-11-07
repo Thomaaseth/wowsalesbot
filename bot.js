@@ -37,19 +37,19 @@ axios.get(`https://api.opensea.io/api/v2/events/collection/${collectionSlug}`, {
 .then((response) => {
     const latestSale = response.data.asset_events[0];
     const name = latestSale.nft.name;
-    const id = latestSale.nft.identifier;
+    // const id = latestSale.nft.identifier;
     const orderHash = latestSale.order_hash;
     const priceWei = response.data.asset_events[0].payment.quantity;
     const priceETH = parseFloat(priceWei) / Math.pow(10, 18)
 
-    console.log(`Latest sale: ${name}, ${id}, ${orderHash}`);
+    console.log(`Latest sale: ${name}, ${orderHash}`);
     console.log(`orderHash: '${orderHash}'`);
     console.log(`lastOrderHash: '${lastOrderHash}'`);
     console.log( `Price in ETH: ${priceETH}`);
 
 
     if (orderHash !== lastOrderHash) {
-        const message = `New WoW sale test: ${name}, ${id}, ${priceETH}`;
+        const message = `New WoW sale: ${name}, ${priceETH} ETH`;
         
         twitterClient.v2.tweet(message)
             .then((response) => {
